@@ -10,12 +10,33 @@
 <div id="app">
     <header class="header-banner">
         <h1>Deca Commandes</h1>
-        <button onclick="">Ajouter Commande</button>
-    </header>
 
+    </header>
+    <button id="addBtn" type="submit" onclick="ajouterCommand()">Ajouter</button>
+    <div id="overlay" style="display:none;"></div>
     <div id="formulaire" style="display:none;">
-        <!-- Formulaire pour ajouter une commande -->
-        <!-- ... (ajoutez les champs nécessaires) -->
+        <form id="ajouterCommandeForm">
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" required>
+
+            <label for="magasin">Magasin:</label>
+            <input type="text" id="magasin" name="magasin" required>
+
+            <label for="reference">Référence:</label>
+            <input type="text" id="reference" name="reference" required>
+
+            <label for="collaborateur">Collaborateur:</label>
+            <input type="text" id="collaborateur" name="collaborateur" required>
+
+            <label for="texte">Texte:</label>
+            <input type="text" id="texte" name="texte" required>
+
+            <label for="commentaire">Commentaire:</label>
+            <textarea id="commentaire" name="commentaire"></textarea>
+
+            <button type="button" id="validerCommandeBtn">Valider</button>
+            <button type="button" id="annulerCommandeBtn">Annuler</button>
+        </form>
     </div>
 
     <div id="commandesList"></div>

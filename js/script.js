@@ -1,11 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
     chargerCommandes();
 
-    // Fonction pour afficher le formulaire
-    function afficherFormulaire() {
+
+    window.ajouterCommand = function () {
         const formulaire = document.getElementById('formulaire');
         formulaire.style.display = 'block';
-    }
+
+        const overlay = document.getElementById('overlay');
+        overlay.style.display = 'block';
+    };
+
+    //fonction disparaitre formulaire
+
+    const vanishBtn = document.getElementById("annulerCommandeBtn");
+    vanishBtn.addEventListener('click',()=>{
+        const formulaire = document.getElementById("formulaire");
+        const overlay = document.getElementById("overlay");
+
+        formulaire.style.display = "none";
+        overlay.style.display ="none";
+    })
+
+    const addBtn = document.getElementById("validerCommandeBtn");
+    addBtn.addEventListener('click', () => {
+        ajouterCommande()
+    })
 
     // Fonction pour ajouter une commande
     function ajouterCommande() {
@@ -127,5 +146,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Ajouter un écouteur d'événements au bouton d'ajout de commande
-    document.getElementById('ajouterCommandeBtn').addEventListener('click', ajouterCommande);
+
 });
