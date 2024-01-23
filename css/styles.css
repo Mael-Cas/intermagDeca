@@ -1,0 +1,29 @@
+/* Styles pour la version mobile */
+@media only screen and (max-width: 600px) {
+    .header-banner {
+        background-color: #3498db;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #app {
+        padding: 10px;
+    }
+
+    button {
+        background-color: #2ecc71;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    form {
+        margin-top: 10px;
+    }
+
+    /* ... autres styles pour la liste des commandes */
+}
