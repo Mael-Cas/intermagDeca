@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 10003
 
 # Commande pour démarrer votre application
-CMD ["npm", "serveur.js"]
+CMD ["npm", "start"]
