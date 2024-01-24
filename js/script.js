@@ -93,28 +93,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
         commandes.forEach(commande => {
             const commandeItem = `
-        <div class="commandeItem">
-          <p><strong>Date:</strong> ${commande.date}</p>
-          <p><strong>Magasin:</strong> ${commande.store}</p>
-          <p><strong>Référence:</strong> ${commande.ref}</p>
-          <p><strong>Collaborateur:</strong> ${commande.colab}</p>
-          <p><strong>Client:</strong> ${commande.customer}</p>
-          <p><strong>Contact:</strong><a href="tel:${commande.contact}"> ${commande.contact}</a> </p>
-          <p><strong>Commentaire:</strong> ${commande.comment}</p>
-          <button data-id="${commande._id}" class="ModifBtn">Modifier</button>
-          <div class="actions">
-            <div>
-                <label for="checkboxSupprimer-${commande._id}">Reçu :</label>
-                <input type="checkbox" id="checkboxSupprimer-${commande._id}" class="checkboxSupprimer">
+        <div>
+            <div class="commandeItem">
+              <p><strong>Date:</strong> ${commande.date}</p>
+              <p><strong>Magasin:</strong> ${commande.store}</p>
+              <p><strong>Référence:</strong> ${commande.ref}</p>
+              <p><strong>Collaborateur:</strong> ${commande.colab}</p>
+              <p><strong>Client:</strong> ${commande.customer}</p>
+              <p><strong>Contact:</strong><a href="tel:${commande.contact}"> ${commande.contact}</a> </p>
+              <p><strong>Commentaire:</strong> ${commande.comment}</p>
+              <button data-id="${commande._id}" class="ModifBtn">Modifier</button>
+              <div class="actions">
+                <div>
+                    <label for="checkboxReceive-${commande._id}">Reçu :</label>
+                    <input type="checkbox" id="checkboxReceive-${commande._id}" class="checkboxSupprimer">
+                </div>
+                <div>
+                    <label for="checkboxCall-${commande._id}">Appelé :</label>
+                    <input type="checkbox" id="checkboxCall-${commande._id}" class="checkboxSupprimer">
+                </div>
+              </div>
+              
             </div>
-            <div>
-                <label for="checkboxSupprimer-${commande._id}">Appelé :</label>
-                <input type="checkbox" id="checkboxSupprimer-${commande._id}" class="checkboxSupprimer">
-            </div>
-          </div>
-          
+            <button class="deleteBtn">Supprimer</button>
         </div>
-        <button class="deleteBtn">Supprimer</button>
       `;
             commandesList.insertAdjacentHTML('beforeend', commandeItem);
         });
@@ -125,11 +127,51 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
 
-        // Ajouter des écouteurs d'événements pour les checkboxes de suppression
+        document.querySelectorAll('.deleteBtn').forEach(button => {
+            button.addEventListener('click', function () {
+                const commandeId = button.previousElementSibling.querySelector('.checkboxSupprimer').id.split('-')[1];
+                const receiveCheckbox = document.getElementById(`checkboxReceive-${commandeId}`);
+                const callCheckbox = document.getElementById(`checkboxCall-${commandeId}`);
+
+                if (receiveCheckbox.checked && callCheckbox.checked) {
+                    // Les deux checkboxes sont cochées, supprimer la commande
+                    supprimerCommande(commandeId);
+                    // Ajouter le code pour supprimer la commande de la base de données
+                } else {
+                    // Afficher une alerte à l'utilisateur
+                    alert('Veuillez cocher les deux checkboxes avant de supprimer la commande.');
+                }
+            });
+        });
 
     }
 
-    // Fonction pour modifier une commande
+    function verifierCheckboxes() {
+        const checkboxes = document.querySelectorAll('.checkboxSupprimer');
+
+        let receiveChecked = false;
+        let callChecked = false;
+
+        checkboxes.forEach(checkbox => {
+            const commandeId = checkbox.id.split('-')[1]; // Récupérer l'ID de la commande depuis l'ID de la checkbox
+
+            if (checkbox.id.startsWith('checkboxReceive') && checkbox.checked) {
+                receiveChecked = true;
+            } else if (checkbox.id.startsWith('checkboxCall') && checkbox.checked) {
+                callChecked = true;
+            }
+        });
+
+        if (receiveChecked && callChecked) {
+            // Les deux checkboxes sont cochées, faire quelque chose
+
+        }
+    }
+
+// Ajoutez un écouteur d'événements pour les checkboxes
+    document.querySelectorAll('.checkboxSupprimer').forEach(checkbox => {
+        checkbox.addEventListener('change', verifierCheckboxes);
+    });
 
     // Fonction pour supprimer une commande
     function supprimerCommande(id) {

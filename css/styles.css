@@ -107,8 +107,7 @@
     }
 
     .deleteBtn{
-        position: absolute;
-        right: 5%;
+
         height: 50px;
         width: 25%;
         background-color: #3b82c5;

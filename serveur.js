@@ -16,7 +16,7 @@ const generateMain = require("./getMainHtml.js")
 // Connexion à la base de données MongoDB (assurez-vous d'avoir MongoDB installé localement)
 async function connect() {
     try {
-        await mongoose.connect(`mongodb://127.0.0.1:27017/decathlon`);
+        await mongoose.connect(`mongodb://${process.env.DB_HOST}:27017/decathlon`);
     } catch (error) {
         console.log(error);
     }
