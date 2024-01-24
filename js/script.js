@@ -102,9 +102,19 @@ document.addEventListener('DOMContentLoaded', function () {
           <p><strong>Contact:</strong><a href="tel:${commande.contact}"> ${commande.contact}</a> </p>
           <p><strong>Commentaire:</strong> ${commande.comment}</p>
           <button data-id="${commande._id}" class="ModifBtn">Modifier</button>
-          <input type="checkbox" id="checkboxSupprimer-${commande._id}" class="checkboxSupprimer">
-          <label for="checkboxSupprimer-${commande._id}">Supprimer</label>
+          <div class="actions">
+            <div>
+                <label for="checkboxSupprimer-${commande._id}">Reçu :</label>
+                <input type="checkbox" id="checkboxSupprimer-${commande._id}" class="checkboxSupprimer">
+            </div>
+            <div>
+                <label for="checkboxSupprimer-${commande._id}">Appelé :</label>
+                <input type="checkbox" id="checkboxSupprimer-${commande._id}" class="checkboxSupprimer">
+            </div>
+          </div>
+          
         </div>
+        <button class="deleteBtn">Supprimer</button>
       `;
             commandesList.insertAdjacentHTML('beforeend', commandeItem);
         });
@@ -116,13 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
 
         // Ajouter des écouteurs d'événements pour les checkboxes de suppression
-        document.querySelectorAll('.checkboxSupprimer').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                if (checkbox.checked) {
-                    supprimerCommande(checkbox.id.split('-')[1]);
-                }
-            });
-        });
+
     }
 
     // Fonction pour modifier une commande

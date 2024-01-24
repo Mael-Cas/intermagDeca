@@ -94,6 +94,29 @@
         display: none;
         z-index: 1;
     }
+    .actions {
+        display: flex;
+        flex-direction: column; /* Aligner les éléments en colonne */
+        gap: 10px;
+        grid-template-columns: auto auto auto;
+        align-items: center;
+    }
 
-    /* ... autres styles pour la liste des commandes */
+    .checkboxSupprimer {
+        margin: 0;
+    }
+
+    .deleteBtn{
+        position: absolute;
+        right: 5%;
+        height: 50px;
+        width: 25%;
+        background-color: #3b82c5;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
 }
