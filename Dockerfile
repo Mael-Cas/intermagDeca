@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Exposer le port sur lequel votre application s'exécute
-EXPOSE 10002
+EXPOSE 10003
 
 # Commande pour démarrer votre application
-CMD ["npm", "start"]
+CMD ["npm", "serveur.js"]
