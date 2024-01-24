@@ -12,12 +12,14 @@
         <h1>Deca Commandes</h1>
 
     </header>
-    <button id="addBtn" type="submit" onclick="ajouterCommand()">Ajouter</button>
+    <div>
+        <button id="addBtn" type="submit" onclick="ajouterCommand()">Ajouter</button>
+    </div>
     <div id="overlay" style="display:none;"></div>
     <div id="formulaire" style="display:none;">
         <form id="ajouterCommandeForm">
             <label for="date">Date:</label>
-            <input type="text" id="date" name="date" required>
+            <input type="date" id="date" name="date" required>
 
             <label for="magasin">Magasin:</label>
             <input type="text" id="magasin" name="magasin" required>
@@ -28,11 +30,11 @@
             <label for="collaborateur">Collaborateur:</label>
             <input type="text" id="collaborateur" name="collaborateur" required>
 
-            <label for="texte">Texte:</label>
-            <input type="text" id="texte" name="texte" required>
+            <label for="nameClient">Nom client:</label>
+            <input type="text" id="nameClient" name="nameClient" required>
 
-            <label for="commentaire">Commentaire:</label>
-            <textarea id="commentaire" name="commentaire"></textarea>
+            <label for="contactClient">Contact client:</label>
+            <input type="text" id="contactClient" name="contactClient" required>
 
             <button type="button" id="validerCommandeBtn">Valider</button>
             <button type="button" id="annulerCommandeBtn">Annuler</button>

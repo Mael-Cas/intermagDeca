@@ -19,11 +19,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         formulaire.style.display = "none";
         overlay.style.display ="none";
+        resetFormulaire();
     })
 
     const addBtn = document.getElementById("validerCommandeBtn");
     addBtn.addEventListener('click', () => {
-        ajouterCommande()
+
+        ajouterCommande();
+        const formulaire = document.getElementById("formulaire");
+        const overlay = document.getElementById("overlay");
+
+        formulaire.style.display = "none";
+        overlay.style.display ="none";
+        resetFormulaire();
     })
 
     // Fonction pour ajouter une commande
@@ -33,42 +41,43 @@ document.addEventListener('DOMContentLoaded', function () {
         const magasin = document.getElementById('magasin').value;
         const reference = document.getElementById('reference').value;
         const collaborateur = document.getElementById('collaborateur').value;
-        const texte = document.getElementById('texte').value;
-        const commentaire = document.getElementById('commentaire').value;
+        const client = document.getElementById('nameClient').value;
+        const contact = document.getElementById('contactClient').value;
+
 
         // Construire l'objet commande
-        const commande = {
+        const commande = JSON.stringify({
             date: date,
             magasin: magasin,
             reference: reference,
             collaborateur: collaborateur,
-            texte: texte,
-            commentaire: commentaire,
-        };
+            customer: client,
+            contact: contact,
+        });
 
         // Envoyer la commande au serveur
-        fetch('/api/commandes', {
+        fetch('/addCommandes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(commande),
+            body: commande,
         })
             .then(response => response.json())
             .then(data => {
-                alert('Commande ajoutée avec succès!');
+
                 chargerCommandes();
                 resetFormulaire();
             })
             .catch(error => {
                 console.error('Erreur lors de l\'ajout de la commande:', error);
-                alert('Erreur lors de l\'ajout de la commande');
+                chargerCommandes();
             });
     }
 
     // Fonction pour charger les commandes depuis le serveur
     function chargerCommandes() {
-        fetch('/api/commandes')
+        fetch('/loadCommandes')
             .then(response => response.json())
             .then(commandes => afficherCommandes(commandes))
             .catch(error => {
@@ -86,18 +95,25 @@ document.addEventListener('DOMContentLoaded', function () {
             const commandeItem = `
         <div class="commandeItem">
           <p><strong>Date:</strong> ${commande.date}</p>
-          <p><strong>Magasin:</strong> ${commande.magasin}</p>
-          <p><strong>Référence:</strong> ${commande.reference}</p>
-          <p><strong>Collaborateur:</strong> ${commande.collaborateur}</p>
-          <p><strong>Texte:</strong> ${commande.texte}</p>
-          <p><strong>Commentaire:</strong> ${commande.commentaire}</p>
-          <button onclick="modifierCommande('${commande._id}')">Modifier</button>
+          <p><strong>Magasin:</strong> ${commande.store}</p>
+          <p><strong>Référence:</strong> ${commande.ref}</p>
+          <p><strong>Collaborateur:</strong> ${commande.colab}</p>
+          <p><strong>Client:</strong> ${commande.customer}</p>
+          <p><strong>Contact:</strong><a href="tel:${commande.contact}"> ${commande.contact}</a> </p>
+          <p><strong>Commentaire:</strong> ${commande.comment}</p>
+          <button data-id="${commande._id}" class="ModifBtn">Modifier</button>
           <input type="checkbox" id="checkboxSupprimer-${commande._id}" class="checkboxSupprimer">
           <label for="checkboxSupprimer-${commande._id}">Supprimer</label>
         </div>
       `;
             commandesList.insertAdjacentHTML('beforeend', commandeItem);
         });
+
+        document.querySelectorAll('.ModifBtn').forEach(button => {
+            button.addEventListener('click', ()=>{
+                afficherFormulaireModification(button.dataset.id);
+            })
+        })
 
         // Ajouter des écouteurs d'événements pour les checkboxes de suppression
         document.querySelectorAll('.checkboxSupprimer').forEach(checkbox => {
@@ -110,24 +126,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Fonction pour modifier une commande
-    function modifierCommande(id) {
-        // Implémentez la logique pour la modification de la commande ici
-        // Vous pouvez afficher un autre formulaire avec les détails de la commande
-    }
 
     // Fonction pour supprimer une commande
     function supprimerCommande(id) {
-        fetch(`/api/commandes/${id}`, {
+        fetch(`/deleteCommand/${id}`, {
             method: 'DELETE',
         })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
+
                 chargerCommandes();
             })
             .catch(error => {
                 console.error('Erreur lors de la suppression de la commande:', error);
-                alert('Erreur lors de la suppression de la commande');
+                chargerCommandes();
             });
     }
 
@@ -146,5 +158,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Ajouter un écouteur d'événements au bouton d'ajout de commande
+
+
+
+    async function modifierCommentaire(reservationId, nouveauCommentaire) {
+        try {
+            const response = await fetch(`/command/${reservationId}/modifier`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ comment: nouveauCommentaire }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                chargerCommandes();
+                // Actualiser la liste des réservations ou effectuer d'autres actions si nécessaire
+            } else {
+                console.error(data.message);
+                // Gérer les erreurs en conséquence
+                chargerCommandes();
+            }
+        } catch (error) {
+            console.error('Erreur lors de la modification du commentaire', error);
+        }
+    }
+
+    // Fonction pour afficher le formulaire de modification
+    async function afficherFormulaireModification(reservationId) {
+        console.log(reservationId);
+        const nouveauCommentaire = await prompt('Entrez le nouveau commentaire :');
+
+        if (nouveauCommentaire !== null) {
+            modifierCommentaire(reservationId, nouveauCommentaire);
+        }
+    }
 
 });
