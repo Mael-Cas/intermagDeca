@@ -107,7 +107,7 @@
     }
 
     .deleteBtn{
-
+        margin-left: 10px;
         height: 50px;
         width: 25%;
         background-color: #3b82c5;
@@ -117,5 +117,29 @@
         border-radius: 4px;
         cursor: pointer;
         margin-top: 10px;
+    }
+
+    .underHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px; /* Vous pouvez ajuster cette valeur selon votre préférence */
+        margin-top: 20px;
+    }
+
+    .underHeader select {
+        height: 30px; /* Ajustez la hauteur selon vos préférences */
+    }
+
+    .FormBtn{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px; /* Vous pouvez ajuster cette valeur selon votre préférence */
+        margin-top: 10px;
+    }
+    .selectSectorForm{
+        height: 30px;
+        width: 100%;
     }
 }

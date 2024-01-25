@@ -44,6 +44,7 @@ const IntermagSchema = new mongoose.Schema({
     customer: String,
     contact: String,
     comment: String,
+    sector: String,
 });
 
 const Intermag = mongoose.model('intermag', IntermagSchema);
@@ -57,6 +58,7 @@ app.post('/addCommandes', (req, res) => {
     const customer = req.body.customer;
     const contact = req.body.contact;
     const comment = "";
+    const sector = req.body.sector;
 
     const newIntermag = new Intermag({
         date: date,
@@ -66,6 +68,7 @@ app.post('/addCommandes', (req, res) => {
         customer: customer,
         contact: contact,
         comment: comment,
+        sector: sector,
     });
     try {
         newIntermag.save();
@@ -78,9 +81,25 @@ app.post('/addCommandes', (req, res) => {
 
 // Route pour récupérer toutes les réservations
 app.get('/loadCommandes', async (req, res) => {
-    const data = await Intermag.find();
+    try {
+        let filter = {};
 
-    res.send(data);
+        const secteur = req.query.secteur;
+        console.log(secteur)
+
+        if (secteur !== undefined) {
+            // Ajoutez le filtre uniquement si secteur n'est pas undefined
+            filter = { sector: secteur };
+            console.log(filter)
+        }
+
+        const data = await Intermag.find(filter);
+
+        res.send(data);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des commandes:', error);
+        res.status(500).send('Erreur lors de la récupération des commandes');
+    }
 });
 
 app.delete('/deleteCommand/:id', async (req, res) => {

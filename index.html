@@ -12,8 +12,19 @@
         <h1>Deca Commandes</h1>
 
     </header>
-    <div>
+    <div class="underHeader">
         <button id="addBtn" type="submit" onclick="ajouterCommand()">Ajouter</button>
+        <select id="secteur" class="selectSector">
+            <option value="All">Tout</option>
+            <option value="Eau">Eau</option>
+            <option value="Ski">Ski</option>
+            <option value="Nature">Nature</option>
+            <option value="Randonné">Randonné</option>
+            <option value="Cycle">Cycle</option>
+            <option value="Running">Running</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Sport-Co">Sport-Co</option>
+        </select>
     </div>
     <div id="overlay" style="display:none;"></div>
     <div id="formulaire" style="display:none;">
@@ -36,8 +47,21 @@
             <label for="contactClient">Contact client:</label>
             <input type="text" id="contactClient" name="contactClient" required>
 
-            <button type="button" id="validerCommandeBtn">Valider</button>
-            <button type="button" id="annulerCommandeBtn">Annuler</button>
+            <label for="secteurForm">Secteur :</label>
+            <select id="secteurForm" class="selectSectorForm">
+                <option value="Eau">Eau</option>
+                <option value="Ski">Ski</option>
+                <option value="Nature">Nature</option>
+                <option value="Randonné">Randonné</option>
+                <option value="Cycle">Cycle</option>
+                <option value="Running">Running</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Sport-Co">Sport-Co</option>
+            </select>
+            <div class="FormBtn">
+                <button type="button" id="validerCommandeBtn">Valider</button>
+                <button type="button" id="annulerCommandeBtn">Annuler</button>
+            </div>
         </form>
     </div>
 

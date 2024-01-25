@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const collaborateur = document.getElementById('collaborateur').value;
         const client = document.getElementById('nameClient').value;
         const contact = document.getElementById('contactClient').value;
+        const secteur = document.getElementById('secteurForm').value;
 
 
         // Construire l'objet commande
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             collaborateur: collaborateur,
             customer: client,
             contact: contact,
+            sector: secteur,
         });
 
         // Envoyer la commande au serveur
@@ -75,9 +77,30 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+
+    const secteurDropdown = document.getElementById('secteur');
+
+// Ajoutez un écouteur d'événements de changement
+    secteurDropdown.addEventListener('change', function() {
+        // La fonction à exécuter lorsque le choix change
+
+
+        chargerCommandes();
+
+
+    });
     // Fonction pour charger les commandes depuis le serveur
     function chargerCommandes() {
-        fetch('/loadCommandes')
+
+        const secteur = document.getElementById('secteur').value;
+
+        let url = '/loadCommandes';
+
+        if (secteur !== "All") {
+            url += `?secteur=${encodeURIComponent(secteur)}`;
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(commandes => afficherCommandes(commandes))
             .catch(error => {
@@ -116,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
               
             </div>
             <button class="deleteBtn">Supprimer</button>
+            <p>${commande.sector}</p>
         </div>
       `;
             commandesList.insertAdjacentHTML('beforeend', commandeItem);
@@ -199,8 +223,8 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('magasin').value = '';
         document.getElementById('reference').value = '';
         document.getElementById('collaborateur').value = '';
-        document.getElementById('texte').value = '';
-        document.getElementById('commentaire').value = '';
+        document.getElementById('nameClient').value = '';
+        document.getElementById('contactClient').value = '';
     }
 
     // Ajouter un écouteur d'événements au bouton d'ajout de commande
@@ -241,5 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
             modifierCommentaire(reservationId, nouveauCommentaire);
         }
     }
+
+
 
 });
