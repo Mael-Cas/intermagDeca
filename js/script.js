@@ -139,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
               
             </div>
             <button class="deleteBtn">Supprimer</button>
-            <p>${commande.sector}</p>
         </div>
       `;
             commandesList.insertAdjacentHTML('beforeend', commandeItem);
