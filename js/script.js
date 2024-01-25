@@ -117,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
         commandes.forEach(commande => {
             const commandeItem = `
         <div>
+            <p class="secteurLabel">${commande.sector}</p>
             <div class="commandeItem">
               <p><strong>Date:</strong> ${commande.date}</p>
               <p><strong>Magasin:</strong> ${commande.store}</p>

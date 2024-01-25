@@ -1,7 +1,7 @@
 /* Styles pour la version mobile */
 @media only screen and (max-width: 600px) {
     body {
-        font-family: 'Arial', sans-serif;
+        font-family: 'Roboto';
         margin: 0;
         padding: 0;
     }
@@ -141,5 +141,13 @@
     .selectSectorForm{
         height: 30px;
         width: 100%;
+    }
+    .secteurLabel {
+        margin-bottom: 5px; /* Espacement entre le secteur et les autres détails */
+        margin-top: 20px;
+        margin-left: 10px;
+        color: #3498db;
+        opacity: 75%;
+
     }
 }
