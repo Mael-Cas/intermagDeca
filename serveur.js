@@ -45,6 +45,8 @@ const IntermagSchema = new mongoose.Schema({
     contact: String,
     comment: String,
     sector: String,
+    called: Boolean,
+    received: Boolean,
 });
 
 const Intermag = mongoose.model('intermag', IntermagSchema);
@@ -69,6 +71,8 @@ app.post('/addCommandes', (req, res) => {
         contact: contact,
         comment: comment,
         sector: sector,
+        called: false,
+        received: false,
     });
     try {
         newIntermag.save();
@@ -126,6 +130,26 @@ app.put('/command/:id/modifier', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Erreur lors de la modification du commentaire' });
+    }
+});
+
+app.put('/updateCheckbox/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const checkboxType = req.body.type;
+        const isChecked = req.body.state;
+        console.log(id);
+        console.log(checkboxType);
+        console.log(isChecked);
+
+        const updateField = {};
+        updateField[checkboxType] = isChecked;
+
+        const updatedCommande = await Intermag.findByIdAndUpdate(id, updateField);
+
+        res.json(updatedCommande);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 

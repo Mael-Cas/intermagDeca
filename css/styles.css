@@ -102,7 +102,7 @@
         align-items: center;
     }
 
-    .checkboxSupprimer {
+    #checkbox {
         margin: 0;
     }
 
